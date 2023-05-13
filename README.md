@@ -1,38 +1,59 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Open-Jira
 
-## Getting Started
+Open-Jira es una aplicación de seguimiento de proyectos y problemas inspirada en el software JIRA. Está construida con Next.js, Docker y MongoDB.
 
-First, run the development server:
+## Requisitos previos
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+- [Node.js](https://nodejs.org/en/) (v14 o superior)
+- [Docker](https://www.docker.com/)
+- [Docker Compose](https://docs.docker.com/compose/)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Instalación
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+1. First list
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+   ```bash
+   git clone https://github.com/<usuario>/open-jira.git
+    cd open-jira
+   ```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+2. Instalar las dependencias del proyecto:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+   ```bash
+    npm install
+   ```
 
-## Learn More
+3. Crear un archivo .env.local en la raíz del proyecto con las variables de entorno necesarias:
 
-To learn more about Next.js, take a look at the following resources:
+   ```bash
+    MONGODB_URI=mongodb://mongo:27017/openjira-db
+    NEXT_PUBLIC_API_URL=http://localhost:3000/api/
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. Construir y ejecutar los contenedores Docker para la base de datos MongoDB:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+   ```bash
+   docker-compose up -d --build mongo-db mongo-express-admin
+   ```
 
-## Deploy on Vercel
+5. Iniciar la aplicación en modo desarrollo:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```bash
+   docker-compose up -d --build mongo-db mongo-express-admin
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+   La aplicación estará disponible en http://localhost:3000.
+
+## Contribución
+
+Agradecemos cualquier contribución a este proyecto, ya sea mediante reporte de errores, sugerencias o mejoras al código.
+
+1. Realice un fork del repositorio.
+2. Cree una nueva rama para sus cambios (git checkout -b feature nombre-de-la-nueva-caracteristica).
+3. Haga commit de sus cambios (git commit -m 'Descripción breve').
+4. Haga push a su rama (git push origin feature nombre-de-la-nueva-caracteristica).
+5. Cree un nuevo Pull Request.
+
+## Licencia
+
+Este proyecto está bajo la licencia MIT. Consulte el archivo LICENSE para más detalles
