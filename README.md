@@ -47,7 +47,6 @@ http://localhost:3000/api/seed
 
    ```bash
     MONGODB_URI=mongodb://mongo:27017/openjira-db
-    NEXT_PUBLIC_API_URL=http://localhost:3000/api/
    ```
 
 4. Construir y ejecutar los contenedores Docker para la base de datos MongoDB:
