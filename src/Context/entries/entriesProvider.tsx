@@ -25,7 +25,11 @@ export const EntriesProvider: FC<Props> = ({ children }) => {
       const { data } = await entriesApi.get<IEntry[]>("/entries");
       dispatch({ type: "[Entry] - Refresh-Entry", payload: data });
     } catch (error) {
-      console.log("error entry: ", error);
+      enqueueSnackbar("refresh entry error", {
+        variant: "success",
+        autoHideDuration: 1500,
+        anchorOrigin: { vertical: "top", horizontal: "right" },
+      });
     }
   };
 
@@ -40,7 +44,11 @@ export const EntriesProvider: FC<Props> = ({ children }) => {
       });
       dispatch({ type: "[Entry] - Add-Entry", payload: data });
     } catch (error) {
-      console.log("create entry error: ", error);
+      enqueueSnackbar("create entry error", {
+        variant: "success",
+        autoHideDuration: 1500,
+        anchorOrigin: { vertical: "top", horizontal: "right" },
+      });
     }
   };
 

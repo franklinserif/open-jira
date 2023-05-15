@@ -63,7 +63,6 @@ const EntryPage: FC<Props> = ({ entry }) => {
   };
 
   const handleDelete = () => {
-    console.log("entry id page: ", entry._id);
     deleteEntry(entry._id);
   };
 
