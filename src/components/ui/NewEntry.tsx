@@ -39,16 +39,16 @@ export const NewEntry = () => {
             error={inputValue.length <= 0 && touched}
             onBlur={() => setTouched(true)}
             fullWidth
-            placeholder="Nueva Entrada"
+            placeholder="New entry"
             autoFocus
             multiline
-            label="Nueva entrada"
-            helperText="Ingrese un valor"
+            label="New entry"
+            helperText="Enter a value"
             sx={{ marginTop: 2, marginBottom: 1 }}
           ></TextField>
           <Box display="flex" justifyContent="space-between">
             <Button onClick={handleIsAdding} endIcon={<SaveOutlinedIcon />}>
-              Cancelar
+              Cancel
             </Button>
             <Button
               onClick={handleSave}
@@ -56,7 +56,7 @@ export const NewEntry = () => {
               endIcon={<SaveOutlinedIcon />}
               color="success"
             >
-              Guardar
+              Save
             </Button>
           </Box>
         </>
@@ -67,7 +67,7 @@ export const NewEntry = () => {
           fullWidth
           variant="outlined"
         >
-          Agregar tarea
+          Add task
         </Button>
       )}
     </Box>

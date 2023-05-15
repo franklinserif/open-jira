@@ -1,7 +1,9 @@
-import { FC, useReducer } from "react";
-import { v4 as uuid } from "uuid";
+import { FC, useReducer, useEffect } from "react";
+import { enqueueSnackbar } from "notistack";
 import { EntriesContext, entriesReducer } from "./";
 import { Entry } from "@/interfaces";
+import { entriesApi } from "@/axiosApi";
+import { IEntry } from "@/models";
 
 export interface entriesState {
   entries: Entry[];
@@ -12,51 +14,83 @@ interface Props {
 }
 
 const entries_INITIAL_STATE: entriesState = {
-  entries: [
-    {
-      _id: uuid(),
-      description:
-        "Pendiente: Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur molestias quod inventore?",
-      status: "pending",
-      createdAt: Date.now() - 1000000,
-    },
-    {
-      _id: uuid(),
-      description:
-        "En-Progreso: Et quis irure minim elit proident sit non consectetur velit eu laborum sit aliqua consectetur.",
-      status: "in-progress",
-      createdAt: Date.now(),
-    },
-    {
-      _id: uuid(),
-      description:
-        "Terminada: Eiusmod laborum consequat aute magna ea consectetur officia mollit ex sit ex.",
-      status: "finished",
-      createdAt: Date.now() - 100000,
-    },
-  ],
+  entries: [],
 };
 
 export const EntriesProvider: FC<Props> = ({ children }) => {
   const [state, dispatch] = useReducer(entriesReducer, entries_INITIAL_STATE);
 
-  const addNewEntry = (description: string) => {
-    const newEntry: Entry = {
-      _id: uuid(),
-      description,
-      status: "pending",
-      createdAt: Date.now(),
-    };
-
-    dispatch({ type: "[Entry] - Add-Entry", payload: newEntry });
+  const refreshEntries = async () => {
+    try {
+      const { data } = await entriesApi.get<IEntry[]>("/entries");
+      dispatch({ type: "[Entry] - Refresh-Entry", payload: data });
+    } catch (error) {
+      console.log("error entry: ", error);
+    }
   };
 
-  const updateEntry = (entry: Entry) => {
-    dispatch({ type: "[Entry] - Update-Entry", payload: entry });
+  useEffect(() => {
+    refreshEntries();
+  }, []);
+
+  const addNewEntry = async (description: string) => {
+    try {
+      const { data } = await entriesApi.post<Entry>("/entries", {
+        description,
+      });
+      dispatch({ type: "[Entry] - Add-Entry", payload: data });
+    } catch (error) {
+      console.log("create entry error: ", error);
+    }
+  };
+
+  const updateEntry = async (
+    { _id, description, status }: Entry,
+    showSnackbar = false
+  ) => {
+    try {
+      const { data } = await entriesApi.put<Entry>(`/entries/${_id}`, {
+        description,
+        status,
+      });
+      dispatch({ type: "[Entry] - Update-Entry", payload: data });
+      if (!showSnackbar) return;
+      enqueueSnackbar("entry updated", {
+        variant: "success",
+        autoHideDuration: 1500,
+        anchorOrigin: { vertical: "top", horizontal: "right" },
+      });
+    } catch (error) {
+      enqueueSnackbar("updated error", {
+        variant: "error",
+        autoHideDuration: 1500,
+        anchorOrigin: { vertical: "top", horizontal: "right" },
+      });
+    }
+  };
+
+  const deleteEntry = async (id: string) => {
+    try {
+      await entriesApi.delete(`/entries/${id}`);
+      dispatch({ type: "[Entry] - Delete-Entry", payload: id });
+      enqueueSnackbar("entry deleted", {
+        variant: "success",
+        autoHideDuration: 1500,
+        anchorOrigin: { vertical: "top", horizontal: "right" },
+      });
+    } catch (error) {
+      enqueueSnackbar("delete error", {
+        variant: "error",
+        autoHideDuration: 1500,
+        anchorOrigin: { vertical: "top", horizontal: "right" },
+      });
+    }
   };
 
   return (
-    <EntriesContext.Provider value={{ ...state, addNewEntry, updateEntry }}>
+    <EntriesContext.Provider
+      value={{ ...state, addNewEntry, updateEntry, deleteEntry }}
+    >
       {children}
     </EntriesContext.Provider>
   );

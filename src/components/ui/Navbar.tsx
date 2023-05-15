@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { AppBar, Toolbar, IconButton, Typography } from "@mui/material";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import { useContext } from "react";
@@ -11,7 +12,11 @@ export const Navbar = () => {
         <IconButton size="large" edge="start" onClick={openSideMenu}>
           <MenuOutlinedIcon />
         </IconButton>
-        <Typography variant="h6">Open Jira</Typography>
+        <Link href="/">
+          <Typography variant="h6" color="white">
+            Open Jira
+          </Typography>
+        </Link>
       </Toolbar>
     </AppBar>
   );

@@ -8,6 +8,26 @@ Open-Jira es una aplicación de seguimiento de proyectos y problemas inspirada e
 - [Docker](https://www.docker.com/)
 - [Docker Compose](https://docs.docker.com/compose/)
 
+## Informacionción adicional
+
+- MongoDB URL Local
+
+```bash
+mongodb://localhost:27017/entriesdb
+```
+
+## Configurar variables de enternos
+
+Renombrar el archivo **.env.template** a **.env**
+
+## Llenar la base de datos con datos de pruebas
+
+Llamar
+
+```
+http://localhost:3000/api/seed
+```
+
 ## Instalación
 
 1. First list
