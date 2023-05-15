@@ -76,4 +76,4 @@ Agradecemos cualquier contribución a este proyecto, ya sea mediante reporte de 
 
 ## Licencia
 
-Este proyecto está bajo la licencia MIT. Consulte el archivo LICENSE para más detalles
+Este proyecto está bajo la licencia MIT. Consulte el archivo LICENSE para más detalles.
